@@ -2,7 +2,6 @@ version: '3'
 
 services:
   app:
-    image: 'docker-spring-boot-postgres:latest'
     build:
       context: ./
     ports:
@@ -10,12 +9,12 @@ services:
     container_name: app
     depends_on:
       - db
-      - keycloak
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db/compose-postgres
       - SPRING_DATASOURCE_USERNAME=compose-postgres
       - SPRING_DATASOURCE_PASSWORD=compose-postgres
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - KEYCLOAK_HOST=keycloak
 
   db:
     image: 'postgres:alpine'

@@ -1,4 +1,4 @@
-package by.agsr.test.configuration;
+package by.agsr.test.controller;
 
 import by.agsr.test.servise.exception.EntityNotFound;
 import org.springframework.http.HttpHeaders;
