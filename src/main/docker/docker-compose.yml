@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3'
 
 services:
   app:
@@ -10,6 +10,7 @@ services:
     container_name: app
     depends_on:
       - db
+      - keycloak
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db/compose-postgres
       - SPRING_DATASOURCE_USERNAME=compose-postgres
@@ -22,3 +23,16 @@ services:
     environment:
       - POSTGRES_USER=compose-postgres
       - POSTGRES_PASSWORD=compose-postgres
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.3
+    container_name: keycloak
+    volumes:
+      - ./imports:/opt/keycloak/data/import
+    ports:
+      - "8080:8080"
+    command: -v start-dev --import-realm
+    environment:
+      KEYCLOAK_IMPORT: /opt/keycloak/data/import/realm-export.json -Dkeycloak.profile.feature.upload_scripts=enabled
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
